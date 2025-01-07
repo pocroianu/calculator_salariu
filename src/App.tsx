@@ -146,25 +146,25 @@ ${t.netSalary}: ${formatNumber(netSalary)} RON
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="flex items-center justify-between mb-8">
+        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
             <div className="flex items-center gap-3">
-              <Calculator className="w-8 h-8 text-indigo-600" />
-              <h1 className="text-2xl font-bold text-gray-800">{t.title}</h1>
+              <Calculator className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" />
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-800">{t.title}</h1>
             </div>
             <div className="flex items-center gap-4">
               <button
                 onClick={handleReset}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
                 title={t.reset}
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setLanguage(language === 'ro' ? 'en' : 'ro')}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition-colors"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition-colors"
                 title="Alt + L"
               >
                 <Languages className="w-4 h-4" />
@@ -173,129 +173,152 @@ ${t.netSalary}: ${formatNumber(netSalary)} RON
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <div className="mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.grossSalary}
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    value={grossSalary}
-                    onChange={(e) => setGrossSalary(Number(e.target.value))}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                      error ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    min="1"
-                    max={MAX_SALARY}
-                    step="100"
-                  />
-                  {error && (
-                    <div className="absolute -bottom-6 left-0 text-sm text-red-500 flex items-center gap-1">
-                      <AlertCircle className="w-4 h-4" />
-                      {error}
-                    </div>
-                  )}
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 sm:gap-6">
+            {/* Input Section */}
+            <div className="order-1">
+              <div className="bg-white rounded-xl p-4 sm:p-5">
+                <div className="mb-5">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t.grossSalary}
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={grossSalary}
+                      onChange={(e) => setGrossSalary(Number(e.target.value))}
+                      className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base lg:text-lg ${
+                        error ? 'border-red-300' : 'border-gray-300'
+                      }`}
+                      min="1"
+                      max={MAX_SALARY}
+                      step="100"
+                    />
+                    {error && (
+                      <div className="absolute -bottom-6 left-0 text-sm text-red-500 flex items-center gap-1">
+                        <AlertCircle className="w-4 h-4" />
+                        {error}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <span className="text-sm font-medium text-gray-700">{t.period}:</span>
+                  <div className="flex rounded-lg overflow-hidden border border-gray-300 w-full sm:w-auto">
+                    <button
+                      onClick={() => setIsYearly(false)}
+                      className={`flex-1 sm:flex-none px-6 py-2 text-sm font-medium ${
+                        !isYearly
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-white text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {t.monthly}
+                    </button>
+                    <button
+                      onClick={() => setIsYearly(true)}
+                      className={`flex-1 sm:flex-none px-6 py-2 text-sm font-medium ${
+                        isYearly
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-white text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {t.yearly}
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-sm font-medium text-gray-700">{t.period}:</span>
-                <div className="flex rounded-lg overflow-hidden border border-gray-300">
-                  <button
-                    onClick={() => setIsYearly(false)}
-                    className={`px-4 py-2 text-sm ${
-                      !isYearly
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {t.monthly}
-                  </button>
-                  <button
-                    onClick={() => setIsYearly(true)}
-                    className={`px-4 py-2 text-sm ${
-                      isYearly
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {t.yearly}
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-indigo-50 rounded-xl p-6 mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800">{t.calculationDetails}</h2>
-                  <button
-                    onClick={handleCopy}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-white hover:bg-gray-50 text-gray-600 transition-colors"
-                  >
-                    <Copy className="w-4 h-4" />
-                    <span>{copied ? t.copied : t.copy}</span>
-                  </button>
-                </div>
-                <div className="space-y-4">
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.health} />
-                      <h3 className="font-medium">{t.healthInsurance}</h3>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {formatNumber(grossSalary)} × 10% = {formatNumber(breakdown.healthInsurance)} RON
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.social} />
-                      <h3 className="font-medium">{t.socialInsurance}</h3>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {formatNumber(grossSalary)} × 25% = {formatNumber(breakdown.socialInsurance)} RON
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.tax} />
-                      <h3 className="font-medium">{t.incomeTax}</h3>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">
-                      ({formatNumber(grossSalary)} - {formatNumber(breakdown.healthInsurance)} - {formatNumber(breakdown.socialInsurance)}) × 10% = {formatNumber(breakdown.incomeTax)} RON
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="w-4 h-4 text-indigo-600" />
-                      <h3 className="font-medium">{t.netSalary}</h3>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {formatNumber(grossSalary)} - {formatNumber(breakdown.healthInsurance)} - {formatNumber(breakdown.socialInsurance)} - {formatNumber(breakdown.incomeTax)} = {formatNumber(netSalary)} RON
-                    </p>
+              {/* Net Salary Result - Desktop */}
+              <div className="hidden lg:block mt-6">
+                <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-xl p-5 text-white">
+                  <h2 className="text-lg font-semibold mb-1">{t.finalNetSalary}</h2>
+                  <div className="text-3xl font-bold break-words">
+                    {formatNumber(netSalary)} RON
                   </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="bg-white rounded-xl p-6 mb-8 h-[400px]">
+            {/* Chart Section */}
+            <div className="order-2">
+              <div className="bg-white rounded-xl p-4 sm:p-5 h-[250px] lg:h-[360px]">
                 <Chart
                   chartType="PieChart"
                   data={chartData}
-                  options={chartOptions}
+                  options={{
+                    ...chartOptions,
+                    chartArea: { width: '100%', height: '85%' },
+                  }}
                   width="100%"
                   height="100%"
                 />
               </div>
+            </div>
 
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-xl p-6 text-white">
-                <h2 className="text-xl font-semibold mb-2">{t.finalNetSalary}</h2>
-                <div className="text-3xl font-bold">
+            {/* Net Salary Result - Mobile */}
+            <div className="order-3 lg:hidden">
+              <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-xl p-5 text-white">
+                <h2 className="text-lg font-semibold mb-1">{t.finalNetSalary}</h2>
+                <div className="text-3xl font-bold break-words">
                   {formatNumber(netSalary)} RON
+                </div>
+              </div>
+            </div>
+
+            {/* Calculation Details */}
+            <div className="order-4 lg:col-span-2">
+              <div className="bg-indigo-50 rounded-xl p-4 sm:p-5">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
+                  <h2 className="text-lg font-semibold text-gray-800">{t.calculationDetails}</h2>
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white hover:bg-gray-50 text-gray-600 transition-colors w-full sm:w-auto justify-center sm:justify-start"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>{copied ? t.copied : t.copy}</span>
+                  </button>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <div className="bg-white rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.health} />
+                      <h3 className="font-medium">{t.healthInsurance}</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 break-words">
+                      {formatNumber(grossSalary)} × 10% = {formatNumber(breakdown.healthInsurance)} RON
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.social} />
+                      <h3 className="font-medium">{t.socialInsurance}</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 break-words">
+                      {formatNumber(grossSalary)} × 25% = {formatNumber(breakdown.socialInsurance)} RON
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="w-4 h-4 text-indigo-600" title={t.tooltips.tax} />
+                      <h3 className="font-medium">{t.incomeTax}</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 break-words">
+                      ({formatNumber(grossSalary)} - {formatNumber(breakdown.healthInsurance)} - {formatNumber(breakdown.socialInsurance)}) × 10% = {formatNumber(breakdown.incomeTax)} RON
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="w-4 h-4 text-indigo-600" />
+                      <h3 className="font-medium">{t.netSalary}</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 break-words">
+                      {formatNumber(grossSalary)} - {formatNumber(breakdown.healthInsurance)} - {formatNumber(breakdown.socialInsurance)} - {formatNumber(breakdown.incomeTax)} = {formatNumber(netSalary)} RON
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
