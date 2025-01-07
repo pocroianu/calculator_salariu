@@ -109,6 +109,8 @@ function App() {
     colors: ['#4F46E5', '#EC4899', '#8B5CF6', '#F59E0B'],
     legend: { position: 'bottom' },
     chartArea: { width: '100%', height: '80%' },
+    tooltip: { trigger: 'selection' },
+    focusTarget: 'category',
   }), [t]);
 
   const handleCopy = async () => {
